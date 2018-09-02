@@ -107,22 +107,25 @@ window.addEventListener('load', function(){
   var bL = document.getElementById('boxL')
   var bS = document.getElementById('boxS')
   var xhr = new XMLHttpRequest();
-  
+
+  //Device Orientation to control the pannel__________________________________
+  //Tobozo has added this control via device orientation. He also has a version where he's
+  //controlling the paddle with a MPU9250 attached to another ESP: https://youtu.be/0tYRnR2kAIQ
+  //This might not work with all devices and browsers (Tobozo uses Firefox)
+  //If you want to try it, just uncomment the following part 
+  /*
   if (window.DeviceOrientationEvent) {
 
     function handleOrientation(event) {
       var x = event.beta;  // In degree in the range [-180,180]
       var y = event.gamma; // In degree in the range [-90,90]
-      if(y>10) {
+      if(x>10) {
         orientation = 1;
-      } else if(y<-10) {
+      } else if(x<-10) {
         orientation = -1;
       } else {
         orientation = 0;
       }
-    }
-
-    setInterval(function() {
       if(lastorientation!=orientation) {
         lastorientation = orientation;
         switch(orientation) {
@@ -144,11 +147,11 @@ window.addEventListener('load', function(){
           break;
         }
       }
-    }, 150);
+    };
 
     window.addEventListener('deviceorientation', handleOrientation);
     
-  }
+  }*/
   
   //RIGHT PC___________________________________________
   bR.onmousedown = function(){
