@@ -80,6 +80,7 @@ Adafruit_SSD1331 tft = Adafruit_SSD1331(cs, dc, rst);
 char webpage[] = R"=====(
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 </head>
 <body>
 <div style="background:#FFA500; width:800px; margin:10px; height:450px;">
@@ -100,13 +101,55 @@ char webpage[] = R"=====(
     </div>
     <div class="boxS" id="boxS" style="background:#44FF44; width:100%; height:100%;"></div>
 </div>
-</body>
 <script>
 window.addEventListener('load', function(){
   var bR = document.getElementById('boxR')
   var bL = document.getElementById('boxL')
   var bS = document.getElementById('boxS')
   var xhr = new XMLHttpRequest();
+  
+  if (window.DeviceOrientationEvent) {
+
+    function handleOrientation(event) {
+      var x = event.beta;  // In degree in the range [-180,180]
+      var y = event.gamma; // In degree in the range [-90,90]
+      if(y>10) {
+        orientation = 1;
+      } else if(y<-10) {
+        orientation = -1;
+      } else {
+        orientation = 0;
+      }
+    }
+
+    setInterval(function() {
+      if(lastorientation!=orientation) {
+        lastorientation = orientation;
+        switch(orientation) {
+          case 1:
+            xhr.open("GET", "/rinc", true);
+            xhr.send();
+          break;
+          case -1:
+            xhr.open("GET", "/linc", true);
+            xhr.send();
+          break;
+          case 0:
+            xhr.open("GET", "/stop", true);
+            xhr.send();
+          break;
+          default:
+            xhr.open("GET", "/start", true);
+            xhr.send();
+          break;
+        }
+      }
+    }, 150);
+
+    window.addEventListener('deviceorientation', handleOrientation);
+    
+  }
+  
   //RIGHT PC___________________________________________
   bR.onmousedown = function(){
     xhr.open("GET", "/rinc", true);
@@ -176,6 +219,7 @@ window.addEventListener('load', function(){
   }
 }, false);
 </script>
+</body>
 </html>
 )=====";
 //------------------------------------------------------------------------------------
