@@ -17,4 +17,4 @@ Connect the SSD1331 Display to the ESP
 Upload the sketch. Then connect to the ESPs wifi and open in the browser the adress/ip
 2.2.2.2 - now you can control the game via the "buttons".
 If you've uncommented the AdviceOrientation part before uploding, you can also control
-via turning/tilting a mobile device(thanks to Tobozo).
+via turning/tilting a mobile device(tested with firefox & chrome). thanks to Tobozo!
