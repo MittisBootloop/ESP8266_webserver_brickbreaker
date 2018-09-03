@@ -114,6 +114,8 @@ window.addEventListener('load', function(){
   //This might not work with all devices and browsers (Tobozo uses Firefox)
   //If you want to try it, just uncomment the following part 
   /*
+  var orientation = 0, lastorientation = 0;
+  
   if (window.DeviceOrientationEvent) {
 
     function handleOrientation(event) {
